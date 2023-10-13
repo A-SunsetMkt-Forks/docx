@@ -27,7 +27,7 @@ const paragraph = new Paragraph({
 });
 ```
 
-Note that for a `InsertedTextRun` and `DeletedTextRun`, it is not possible to simply call it with only a text as in `new TextRun("some text")`, since the additonal fields for change tracking need to be provided. Similar to a normal `TextRun` you can add additional text properties.
+Note that for a `InsertedTextRun` and `DeletedTextRun`, it is not possible to simply call it with only a text as in `new TextRun("some text")`, since the additional fields for change tracking need to be provided. Similar to a normal `TextRun` you can add additional text properties.
 
 ```ts
 import { Paragraph, TextRun, InsertedTextRun, DeletedTextRun } from "docx";
@@ -37,7 +37,7 @@ const paragraph = new Paragraph({
         new TextRun("This is a simple demo"),
         new DeletedTextRun({
             text: "with a deletion.",
-            color: "red",
+            color: "ff0000",
             bold: true,
             size: 24,
             id: 0,
@@ -48,7 +48,7 @@ const paragraph = new Paragraph({
 });
 ```
 
-In addtion to marking text as inserted or deleted, change tracking can also be added via the document settings. This will enable new changes to be tracked as well.
+In addition to marking text as inserted or deleted, change tracking can also be added via the document settings. This will enable new changes to be tracked as well.
 
 ```ts
 import { Document } from "docx";
@@ -59,3 +59,18 @@ const doc = new Document({
     },
 });
 ```
+
+If you want to express a style changes, you can add a `revision` to a `TextRun` which need to include all previous style attributes.
+
+```ts
+new TextRun({
+    bold: true,
+    text: "This text is now bold and was previously not",
+    revision: {
+        id: 1,
+        author: "Firstname Lastname",
+        date: "2020-10-06T09:05:00Z",
+        bold: false,
+    }
+}).break()
+````
